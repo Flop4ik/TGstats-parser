@@ -10,6 +10,12 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
+const (
+	TGSTAT_IDRK  = ""
+	TGSTAT_SIRK  = ""
+	CF_CLEARANCE = ""
+)
+
 func extractTagFromURL(url string) string {
 	parts := strings.Split(url, "/@")
 	if len(parts) < 2 {
@@ -83,19 +89,19 @@ func processChannels() {
 	cookies := []*http.Cookie{
 		{
 			Name:   "tgstat_idrk",
-			Value:  "913a83c1e07790d96f448f6ab67c09abdd55d1bb41d4874155ffd29c28b74adea%3A2%3A%7Bi%3A0%3Bs%3A11%3A%22tgstat_idrk%22%3Bi%3A1%3Bs%3A53%3A%22%5B11218702%2C%22b-6SuVjV_-zNV0VwDiG9KcKFKFGYnwgJ%22%2C2592000%5D%22%3B%7D", // замени на реальное значение
-			Domain: "tgstat.ru",                                                                                                                                                                                                      // предположительный домен
+			Value:  TGSTAT_IDRK,
+			Domain: "tgstat.ru",
 			Path:   "/",
 		},
 		{
 			Name:   "tgstat_sirk",
-			Value:  "gf0efq3q6fgj3ih2628kv236dm",
+			Value:  TGSTAT_SIRK,
 			Domain: "tgstat.ru",
 			Path:   "/",
 		},
 		{
 			Name:   "cf_clearance",
-			Value:  "5eRlLOPaQ_nkYFNNiixHfoXTnrar2pvMzbs_C4qlys8-1747746385-1.2.1.1-tFwcXMR1JspRhmpNuMKYMtNV6CAK7EDoxdgrK_4Pjiz.dwI4E4BYP5WzcN8j.baUkpv_TLrQ4q.aetjkZ9dNCLjX8wZ6TiwInc81lymDlXXJISCOlegmQw0qz62Wp_NhGHTjd4gQzDVCVobLT.2hMEIyjcQfRG6XBR3MTS1w6LsxT67io.rbVFb34bLWOsoJKAjHAaQ8yLky38SfCjn9_uE1rhStUuoVnOyBTdohXs7A1OKeHvBRavghrpD4tggMlZqc9zVS0cXaXAHq6waIG7oum8QKC6ba1bIN_Nk8SRV5_9PoBL.nnU2FEbynonYOBzkfwiqL0Nw9rcZnP8tGR7wFQgOVHNPDqksUVZTgMSg",
+			Value:  CF_CLEARANCE,
 			Domain: "tgstat.ru",
 			Path:   "/",
 		},
@@ -127,6 +133,7 @@ func processChannels() {
 
 func main() {
 	list := []string{}
+	os.Remove("chatlinks.txt")
 
 	c := colly.NewCollector(
 		colly.AllowURLRevisit(),
